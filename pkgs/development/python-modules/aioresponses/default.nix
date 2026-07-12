@@ -12,17 +12,18 @@
 
   # tests
   ddt,
+  pytest-asyncio,
   pytestCheckHook,
 }:
 
 buildPythonPackage rec {
   pname = "aioresponses";
-  version = "0.7.8";
+  version = "0.7.9";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-uGHN/l3FjzuK+sewppc9XXsstgjdD2JT0WuO6Or23xE=";
+    hash = "sha256-Hc+iiTj8AG8Eapg4OnwHrBgL56SSwe1Vf1zXsIBTV9M=";
   };
 
   patches = [
@@ -31,11 +32,6 @@ buildPythonPackage rec {
     ./aiohttp-3.14-compat.patch
   ];
 
-  postPatch = ''
-    # https://github.com/pnuckowski/aioresponses/pull/278
-    substituteInPlace aioresponses/core.py \
-      --replace-fail asyncio.iscoroutinefunction inspect.iscoroutinefunction
-  '';
 
   nativeBuildInputs = [
     pbr
@@ -48,6 +44,7 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [
     ddt
+    pytest-asyncio
     pytestCheckHook
   ];
 
